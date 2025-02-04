@@ -1,8 +1,7 @@
-
 document.addEventListener("DOMContentLoaded", function () {
     const fruitImages = document.querySelectorAll(".fruit");
     const videoContainer = document.getElementById("video-container");
-    const youtubeVideo = document.getElementById("youtube-video");
+    const experimentVideo = document.getElementById("experiment-video");
     const experimentButtons = document.querySelectorAll(".experiment-btn");
     let selectedExperiment = null; // 初期状態は未選択
     let hideTimeout; // 動画非表示タイマー
@@ -12,9 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
         button.addEventListener("click", function () {
             selectedExperiment = this.getAttribute("data-experiment");
 
-            // 動画を強制的に消す
-            videoContainer.style.display = "none";
-            youtubeVideo.src = "";
+            // 動画を停止して非表示にする
+            experimentVideo.pause();
+            experimentVideo.load(); // 動画をリセットしてスムーズな再生を可能に
+            videoContainer.style.opacity = "0"; // フェードアウト
+            setTimeout(() => {
+                videoContainer.style.display = "none";
+            }, 500);
 
             // ボタンのスタイルを更新（選択されたボタンを強調）
             experimentButtons.forEach(btn => btn.classList.remove("selected"));
@@ -30,15 +33,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            const videoId = this.getAttribute(`data-video-${selectedExperiment}`);
-            const duration = parseInt(this.getAttribute(`data-duration-${selectedExperiment}`), 10) || 50000;
+            const videoUrl = this.getAttribute(`data-video-${selectedExperiment}`);
+            const duration = parseInt(this.getAttribute(`data-duration`), 10) || 50000;
 
-            if (!videoId) return;
+            if (!videoUrl) return;
 
-            youtubeVideo.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+            // 🎬 動画の再生設定
+            experimentVideo.src = videoUrl;
+            experimentVideo.play();
 
-            // 動画を表示
+            // 動画コンテナを表示（フェードイン）
             videoContainer.style.display = "block";
+            setTimeout(() => {
+                videoContainer.style.opacity = "1";
+            }, 50);
 
             // 🔴 クリックしたフルーツの範囲を一時的に赤枠で表示
             fruitImages.forEach(f => f.style.border = "2px solid transparent"); // 他の枠をリセット
@@ -52,10 +60,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 clearTimeout(hideTimeout);
             }
 
-            // 指定時間後に動画を非表示
+            // 指定時間後に動画をフェードアウト＆非表示
             hideTimeout = setTimeout(() => {
-                videoContainer.style.display = "none";
-                youtubeVideo.src = ""; // 動画をリセット
+                experimentVideo.pause();
+                experimentVideo.load(); // 動画リセット（`src = ""` は削除）
+                videoContainer.style.opacity = "0";
+                setTimeout(() => {
+                    videoContainer.style.display = "none";
+                }, 500);
             }, duration);
         });
     });

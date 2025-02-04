@@ -34,18 +34,16 @@ body {
 /* 🍇 フルーツ画像（クリック可能エリアを視覚化） */
 .fruit {
     width: auto; /* サイズは後で調整しやすいように */
-/*    cursor: pointer;*/
     cursor: inherit !important; /* フォークカーソルを維持 */
     position: absolute; /* 親要素の基準で自由に配置 */
     border: 2px solid transparent; /* クリック可能エリアを枠で表示 */
     transition: border 0.3s ease, transform 0.2s ease; /* なめらかに変化 */
 }
 
-
 /* 🟡 フルーツのクリック範囲をホバーで可視化 */
 .fruit:hover {
     border: 2px solid rgba(255, 255, 255, 0.8); /* 枠の色を変更（白） */
-    transform: scale(0.95); /* ほんの少し拡大してクリックしやすく */
+    transform: scale(0.95); /* ほんの少し縮小 */
 }
 
 /* 🍎 各フルーツの個別位置設定 */
@@ -103,28 +101,32 @@ body {
 }
 
 
-/* 🎬 YouTube Video Container */
+/* 🎬 動画コンテナ（Cloudflare R2 用） */
 #video-container {
     position: absolute;
-    top:0%; /* 動画を少し上に配置 */
+    top: 10%; /* 動画を少し上に配置 */
     left: 50%;
-    transform: translate(-50%, 0);
-    display: none;
+    transform: translateX(-50%, 0);
+    width: 80vw; /* 動画サイズを画面幅に合わせる */
+    height: auto;
     z-index: 10;
+    display: none; /* 初期状態では非表示 */
 }
 
-/* 📺 YouTube Video サイズ */
-#youtube-video {
-    width: 158vw; /* 動画を大きく */
-    height: 78vh;
+/* 📺 Cloudflare R2 の動画プレイヤー */
+#experiment-video {
+    width: 100%;
+    height: auto;
+    max-height: 70vh; /* 最大サイズ制限 */
+    border: 3px solid white;
+    border-radius: 10px;
+    background-color: black;
 }
 
 /* 🏆 追加: ボタンの上でもフォークカーソルを維持 */
 button {
     cursor: inherit !important;
 }
-
-
 
 /* 🏆 Experiment ボタンのコンテナ（横並びにする） */
 #experiment-buttons {
