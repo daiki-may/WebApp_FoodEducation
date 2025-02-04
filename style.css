@@ -9,19 +9,21 @@ body {
 /* 🖼 Front Image */
 #front-image {
     position: absolute;
-    top: 10%;
+    top: 8%;
     left: 50%;
     transform: translateX(-50%);
-    width: 55vw; /* Front画像を少し大きく */
+    width: 56vw; /* Front画像を少し大きく */
+    z-index: 1;
 }
 
 /* 🍽 Plate Image */
 #plate-image {
     position: absolute;
-    bottom: 0%;
+    bottom: -1%;
     left: 51%;
     transform: translateX(-50%);
     width: 35vw; /* Plate画像を小さく */
+    z-index: 4;
 }
 
 /* 🍏 フルーツコンテナ */
@@ -38,6 +40,7 @@ body {
     position: absolute; /* 親要素の基準で自由に配置 */
     border: 2px solid transparent; /* クリック可能エリアを枠で表示 */
     transition: border 0.3s ease, transform 0.2s ease; /* なめらかに変化 */
+    z-index: 5;
 }
 
 /* 🟡 フルーツのクリック範囲をホバーで可視化 */
@@ -49,79 +52,81 @@ body {
 /* 🍎 各フルーツの個別位置設定 */
 #grape {
     left: 40%;
-    bottom: 8%;
+    bottom: 7%;
     width: 6vw;
     height: auto;
 }
 
 #kiwi {
     left: 50%;
-    bottom: 15%;
+    bottom: 14%;
     width: 6vw;
     height: auto;
 }
 
 #melon {
     left: 43.5%;
-    bottom: 14%;
+    bottom: 13%;
     width: 6vw;
     height: auto;
 }
 
 #pine {
     left: 50%;
-    bottom: 5%;
+    bottom: 4%;
     width: 7vw;
     height: auto;
 }
 
 #raspberry {
     left: 53%;
-    bottom: 9.5%;
+    bottom: 8.5%;
     width: 7vw;
     height: auto;
 }
 
 #strawberry {
     left: 45%;
-    bottom: 5%;
+    bottom: 4%;
     width: 6vw;
     height: auto;
 }
 
 #desk-image {
     position: absolute;
-    bottom: 0;
+    bottom: 0%;
     left: 50%;
     transform: translateX(-50%);
     width: auto;
-    max-width: 100%;
+    max-width: 120%;
     height: 23vh;
-    z-index: -1;
+    z-index: 3;
 }
 
 
 /* 🎬 動画コンテナ（Cloudflare R2 用） */
 #video-container {
     position: absolute;
-    top: 10%; /* 動画を少し上に配置 */
+    top: 0%; /* 画面の上寄りに配置 */
     left: 50%;
-    transform: translateX(-50%, 0);
-    width: 80vw; /* 動画サイズを画面幅に合わせる */
+    transform: translateX(-50%); /* 中央揃え */
+    width: 100vw; /* 画面幅の90%を使用（大きくする） */
+    max-width: 1500px; /* 最大幅を設定（大きすぎるのを防ぐ） */
     height: auto;
-    z-index: 10;
+    z-index: 2;
     display: none; /* 初期状態では非表示 */
 }
 
 /* 📺 Cloudflare R2 の動画プレイヤー */
 #experiment-video {
-    width: 100%;
+    width: 60%; /* コンテナの幅いっぱいに広げる */
     height: auto;
-    max-height: 70vh; /* 最大サイズ制限 */
-    border: 3px solid white;
-    border-radius: 10px;
+    max-height: 80vh; /* 画面の高さの90%まで拡大（スマホ対応） */
+    border: none; /* 外枠を削除 */
+    border-radius: 0; /* 角丸を削除 */
     background-color: black;
 }
+
 
 /* 🏆 追加: ボタンの上でもフォークカーソルを維持 */
 button {
