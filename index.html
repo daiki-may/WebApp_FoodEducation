@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Education Experiment</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <img id="front-image" src="images/front.png" alt="Front Image">
+    
+    <!-- 🎬 YouTube 動画エリア -->
+    <div id="video-container">
+        <iframe id="youtube-video" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+    </div>
+
+    <img id="plate-image" src="images/plate.png" alt="Plate Image">
+    <img id="desk-image" src="images/desk.png" alt="Desk Image">
+
+    <!-- 🍓 フルーツ画像 -->
+    <div id="fruit-container">
+        <img id="grape" class="fruit" src="images/real/grape.png"
+             data-video-V_German="CqvVy2soT0s" data-duration-V_German="49000"
+             data-video-VV_German="gRrSI6ehVe0" data-duration-VV_German="49000"
+             data-video-VVP_German="edkNAAiVAgA" data-duration-VVP_German="49000"
+             alt="Grape">
+        <img id="kiwi" class="fruit" src="images/real/kiwi.png" 
+             data-video-V_German="wedQLpIyddw" data-duration-V_German="48000"
+             data-video-VV_German="T1yzsiERGig" data-duration-VV_German="48000"
+             data-video-VVP_German="vfUBw0gnUx0" data-duration-VVP_German="48000"
+             alt="Kiwi">
+        <img id="melon" class="fruit" src="images/real/melon.png" 
+             data-video-V_German="H263Rfeqt9M" data-duration-V_German="49000"
+             data-video-VV_German="wrEN504PVic" data-duration-VV_German="49000"
+             data-video-VVP_German="H8usj_oyqa8" data-duration-VVP_German="49000"
+             alt="Melon">
+        <img id="pine" class="fruit" src="images/real/pine.png" 
+             data-video-V_German="BMysUfqOBgg" data-duration-V_German="49000"
+             data-video-VV_German="5L66u2Go-9A" data-duration-VV_German="49000"
+             data-video-VVP_German="9Ro-pPGw2pg" data-duration-VVP_German="49000"
+             alt="Pine">
+        <img id="raspberry" class="fruit" src="images/real/raspberry.png" 
+             data-video-V_German="WucS4KM15v0" data-duration-V_German="50000"
+             data-video-VV_German="und1EMP9NHs" data-duration-VV_German="50000"
+             data-video-VVP_German="GyxRaOPLxGY" data-duration-VVP_German="50000"
+             alt="Raspberry">
+        <img id="strawberry" class="fruit" src="images/real/strawberry.png" 
+             data-video-V_German="trP5sL3WyT8" data-duration-V_German="48000"
+             data-video-VV_German="uzU_EaPOBIA" data-duration-VV_German="48000"
+             data-video-VVP_German="a8EaJ0gS3fM" data-duration-VVP_German="48000"
+             alt="Strawberry">
+    </div>
+
+    <!-- 🏆 Experiment ボタン -->
+    <div id="experiment-buttons">
+        <div id="experiment-text">Please select your experiment.</div>
+        <div id="experiment-button-container">
+            <button class="experiment-btn" data-experiment="V_German">Ex1</button>
+            <button class="experiment-btn" data-experiment="VV_German">Ex2</button>
+            <button class="experiment-btn" data-experiment="VVP_German">Ex3</button>
+        </div>
+    </div>
+
+</body>
+</html>

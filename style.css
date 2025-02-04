@@ -1,0 +1,190 @@
+/* 🍏 全体のレイアウト調整 */
+body {
+    background-color: black;
+    text-align: center;
+    cursor: url('./images/fork.png') 0 100, auto;  /* フォークカーソル */
+    overflow: hidden; /* スクロールバーを消す */
+}
+
+/* 🖼 Front Image */
+#front-image {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 55vw; /* Front画像を少し大きく */
+}
+
+/* 🍽 Plate Image */
+#plate-image {
+    position: absolute;
+    bottom: 0%;
+    left: 51%;
+    transform: translateX(-50%);
+    width: 35vw; /* Plate画像を小さく */
+}
+
+/* 🍏 フルーツコンテナ */
+#fruit-container {
+    position: relative; /* フルーツの親要素 */
+    width: 100%;
+    height: 100vh;
+}
+
+/* 🍇 フルーツ画像（クリック可能エリアを視覚化） */
+.fruit {
+    width: auto; /* サイズは後で調整しやすいように */
+/*    cursor: pointer;*/
+    cursor: inherit !important; /* フォークカーソルを維持 */
+    position: absolute; /* 親要素の基準で自由に配置 */
+    border: 2px solid transparent; /* クリック可能エリアを枠で表示 */
+    transition: border 0.3s ease, transform 0.2s ease; /* なめらかに変化 */
+}
+
+
+/* 🟡 フルーツのクリック範囲をホバーで可視化 */
+.fruit:hover {
+    border: 2px solid rgba(255, 255, 255, 0.8); /* 枠の色を変更（白） */
+    transform: scale(0.95); /* ほんの少し拡大してクリックしやすく */
+}
+
+/* 🍎 各フルーツの個別位置設定 */
+#grape {
+    left: 40%;
+    bottom: 8%;
+    width: 6vw;
+    height: auto;
+}
+
+#kiwi {
+    left: 50%;
+    bottom: 15%;
+    width: 6vw;
+    height: auto;
+}
+
+#melon {
+    left: 43.5%;
+    bottom: 14%;
+    width: 6vw;
+    height: auto;
+}
+
+#pine {
+    left: 50%;
+    bottom: 5%;
+    width: 7vw;
+    height: auto;
+}
+
+#raspberry {
+    left: 53%;
+    bottom: 9.5%;
+    width: 7vw;
+    height: auto;
+}
+
+#strawberry {
+    left: 45%;
+    bottom: 5%;
+    width: 6vw;
+    height: auto;
+}
+
+#desk-image {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    max-width: 100%;
+    height: 23vh;
+    z-index: -1;
+}
+
+
+/* 🎬 YouTube Video Container */
+#video-container {
+    position: absolute;
+    top:0%; /* 動画を少し上に配置 */
+    left: 50%;
+    transform: translate(-50%, 0);
+    display: none;
+    z-index: 10;
+}
+
+/* 📺 YouTube Video サイズ */
+#youtube-video {
+    width: 158vw; /* 動画を大きく */
+    height: 78vh;
+}
+
+/* 🏆 追加: ボタンの上でもフォークカーソルを維持 */
+button {
+    cursor: inherit !important;
+}
+
+
+
+/* 🏆 Experiment ボタンのコンテナ（横並びにする） */
+#experiment-buttons {
+    position: fixed;
+    right: 14vw;
+    bottom: 8vh;
+    transform: translateX(50%); /* 中央に配置 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 📢 説明テキスト（ボタンの上に配置） */
+#experiment-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* 🎯 Experiment ボタン（横並び） */
+#experiment-button-container {
+    display: flex;
+    gap: 15px; /* ボタンの間隔 */
+}
+
+/* 🎯 Experiment ボタンのデザイン（円形） */
+.experiment-btn {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #ff7eb3, #ff758c);
+    border: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    border-radius: 50%; /* 円形 */
+    cursor: pointer;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 🟡 ホバー時のデザイン */
+.experiment-btn:hover {
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    transform: scale(1.1);
+}
+
+/* 🟢 ボタンが選択されたときの強調 */
+.experiment-btn.selected {
+    background: linear-gradient(135deg, #ff5678, #ff3456);
+    transform: scale(1.2);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+}
+
+.fruit-wrapper {
+    position: relative;
+    display: inline-block;
+}
