@@ -107,14 +107,16 @@ body {
 /* 🎬 動画コンテナ（Cloudflare R2 用） */
 #video-container {
     position: absolute;
-    top: 0%; /* 画面の上寄りに配置 */
+    top: 0%; /* 正しい位置に配置（上部に一瞬表示されるのを防ぐ） */
     left: 50%;
-    transform: translateX(-50%); /* 中央揃え */
-    width: 100vw; /* 画面幅の90%を使用（大きくする） */
-    max-width: 1500px; /* 最大幅を設定（大きすぎるのを防ぐ） */
+    transform: translateX(-50%);
+    width: 100vw;
+    max-width: 1500px;
     height: auto;
     z-index: 2;
-    display: none; /* 初期状態では非表示 */
+    opacity: 0; /* 初期状態で透明に */
+    visibility: hidden; /* 初期状態で非表示 */
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
 /* 📺 Cloudflare R2 の動画プレイヤー */
@@ -124,6 +126,14 @@ body {
     max-height: 80vh; /* 画面の高さの90%まで拡大（スマホ対応） */
     border: none; /* 外枠を削除 */
     border-radius: 0; /* 角丸を削除 */
+    background-color: black;
+}
+/* 📺 動画プレイヤー */
+#experiment-video {
+    width: 60%;
+    height: auto;
+    max-height: 80vh;
+    border: none;
     background-color: black;
 }
 

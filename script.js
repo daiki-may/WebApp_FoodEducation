@@ -15,7 +15,10 @@ document.addEventListener("DOMContentLoaded", function () {
             experimentVideo.pause();
             experimentVideo.src = "";
             experimentVideo.load(); // 次の再生のためにリセット
-            videoContainer.style.display = "none";
+            videoContainer.style.opacity = "0"; // フェードアウト
+            setTimeout(() => {
+                videoContainer.style.visibility = "hidden";
+            }, 300);
 
             // ボタンのスタイルを更新（選択されたボタンを強調）
             experimentButtons.forEach(btn => btn.classList.remove("selected"));
@@ -42,8 +45,9 @@ document.addEventListener("DOMContentLoaded", function () {
             experimentVideo.load(); // 新しい動画の読み込み
             experimentVideo.play();
 
-            // 動画コンテナを表示（フェードイン）
-            videoContainer.style.display = "block";
+            // 動画コンテナを表示（透明→可視化をスムーズに）
+            videoContainer.style.visibility = "visible";
+            videoContainer.style.opacity = "1";
 
             // 🔴 クリックしたフルーツの範囲を一時的に赤枠で表示
             fruitImages.forEach(f => f.style.border = "2px solid transparent"); // 他の枠をリセット
@@ -57,20 +61,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 clearTimeout(hideTimeout);
             }
 
-            // ✅ 動画終了時に自動再生しないようにする
+            // ✅ 動画終了時に非表示にする
             experimentVideo.onended = function () {
                 experimentVideo.pause();
-                experimentVideo.src = ""; // 動画をリセット
-                experimentVideo.load(); // 次の再生のためにリセット
-                videoContainer.style.display = "none";
+                experimentVideo.src = "";
+                experimentVideo.load();
+                videoContainer.style.opacity = "0";
+                setTimeout(() => {
+                    videoContainer.style.visibility = "hidden";
+                }, 300);
             };
 
             // 指定時間後に動画を非表示（万が一 `onended` が効かない場合の保険）
             hideTimeout = setTimeout(() => {
                 experimentVideo.pause();
-                experimentVideo.src = ""; // 動画をリセット
+                experimentVideo.src = "";
                 experimentVideo.load();
-                videoContainer.style.display = "none";
+                videoContainer.style.opacity = "0";
+                setTimeout(() => {
+                    videoContainer.style.visibility = "hidden";
+                }, 300);
             }, duration);
         });
     });
