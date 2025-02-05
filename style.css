@@ -217,6 +217,7 @@ button {
     color: white;
     text-align: center;
     margin-bottom: 10px;
+    z-index: 5;
 }
 
 /* 🎯 Experiment ボタン（横並び） */
