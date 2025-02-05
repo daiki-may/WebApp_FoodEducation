@@ -9,10 +9,10 @@ body {
 /* 🖼 Front Image */
 #front-image {
     position: absolute;
-    top: 7%;
+    top: 8%;
     left: 50%;
     transform: translateX(-50%);
-    width: 60vw; /* Front画像を少し大きく */
+    width: 55vw; /* Front画像を少し大きく */
     z-index: 1;
 }
 
@@ -131,7 +131,7 @@ body {
     top: 40%;  /* 画面中央 */
     left: 50.3%;  /* 画面中央 */
     transform: translate(-50%, -50%);  /* 完全に中央寄せ */
-    width: 60vw;  /* 画面の 60% 幅 */
+    width: 55vw;  /* 画面の 60% 幅 */
     max-width: 1200px;
     height: auto;
     object-fit: contain;
@@ -152,7 +152,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 100;
+    z-index: 9999;
 }
 
 /* ⏳ ローディングメインテキスト */
@@ -208,6 +208,7 @@ button {
     display: flex;
     flex-direction: column;
     align-items: center;
+    z-index: 9000;
 }
 
 /* 📢 説明テキスト（ボタンの上に配置） */
@@ -217,7 +218,7 @@ button {
     color: white;
     text-align: center;
     margin-bottom: 10px;
-    z-index: 5;
+    z-index: 9000;
 }
 
 /* 🎯 Experiment ボタン（横並び） */
