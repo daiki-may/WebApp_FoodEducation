@@ -9,10 +9,10 @@ body {
 /* 🖼 Front Image */
 #front-image {
     position: absolute;
-    top: 8%;
+    top: 7%;
     left: 50%;
     transform: translateX(-50%);
-    width: 56vw; /* Front画像を少し大きく */
+    width: 60vw; /* Front画像を少し大きく */
     z-index: 1;
 }
 
@@ -104,38 +104,94 @@ body {
 }
 
 
-/* 🎬 動画コンテナ（Cloudflare R2 用） */
+/* 🎬 動画コンテナ（front.png の前後に配置可能） */
 #video-container {
     position: absolute;
-    top: 0%; /* 正しい位置に配置（上部に一瞬表示されるのを防ぐ） */
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100vw;
-    max-width: 1500px;
+    top: 40%;  /* 画面中央 */
+    left: 50.3%;  /* 画面中央 */
+    transform: translate(-50%, -50%); /* 完全に中央寄せ */
+    width: 100vw;  /* 画面の 60% 幅 */
     height: auto;
-    z-index: 2;
-    opacity: 0; /* 初期状態で透明に */
-    visibility: hidden; /* 初期状態で非表示 */
-    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    max-width: 800px;  /* 最大幅を 800px に制限 */
+    display: none;
+    z-index: -1; /* 初期状態は front.png の後ろ */
 }
 
-/* 📺 Cloudflare R2 の動画プレイヤー */
+/* 🎥 Cloudflare 動画 */
 #experiment-video {
-    width: 60%; /* コンテナの幅いっぱいに広げる */
-    height: auto;
-    max-height: 80vh; /* 画面の高さの90%まで拡大（スマホ対応） */
-    border: none; /* 外枠を削除 */
-    border-radius: 0; /* 角丸を削除 */
+    width: 100%;  /* コンテナにフィット */
+    height: auto;  /* アスペクト比維持 */
+    object-fit: contain;  /* 比率を維持しつつ縮小 */
     background-color: black;
 }
-/* 📺 動画プレイヤー */
-#experiment-video {
-    width: 60%;
+
+/* 🎬 事前に読み込む動画（非表示 & z-index: -1） */
+#preload-videos video {
+    position: absolute;
+    top: 40%;  /* 画面中央 */
+    left: 50.3%;  /* 画面中央 */
+    transform: translate(-50%, -50%);  /* 完全に中央寄せ */
+    width: 60vw;  /* 画面の 60% 幅 */
+    max-width: 1200px;
     height: auto;
-    max-height: 80vh;
-    border: none;
-    background-color: black;
+    object-fit: contain;
+    display: none;
+    z-index: -1;
 }
+
+
+/* ⏳ ローディング画面 */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+/* ⏳ ローディングメインテキスト */
+#loading-text {
+    font-size: 3vw;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    margin-bottom: 0.5vw;
+}
+
+/* ⏳ ローディングサブテキスト */
+#loading-subtext {
+    font-size: 1.8vw;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    font-style: italic;
+    margin-bottom: 1vw;
+}
+
+/* 🔵 進捗バーコンテナ */
+#progress-bar-container {
+    width: 40vw;
+    height: 1.5vw;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* 🔵 進捗バー本体 */
+#progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #ff7eb3, #ff758c);
+    transition: width 0.2s ease-in-out;
+}
+
+
+
 
 
 /* 🏆 追加: ボタンの上でもフォークカーソルを維持 */

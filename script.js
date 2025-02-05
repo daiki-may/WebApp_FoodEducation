@@ -1,30 +1,117 @@
 document.addEventListener("DOMContentLoaded", function () {
     const fruitImages = document.querySelectorAll(".fruit");
-    const videoContainer = document.getElementById("video-container");
-    const experimentVideo = document.getElementById("experiment-video");
     const experimentButtons = document.querySelectorAll(".experiment-btn");
-    let selectedExperiment = null; // 初期状態は未選択
-    let hideTimeout; // 動画非表示タイマー
+    const preloadVideosContainer = document.getElementById("preload-videos");
+    const loadingScreen = document.getElementById("loading-screen");
+    const progressBar = document.getElementById("progress-bar");
+    let selectedExperiment = null;
+    let preloadedVideos = {};
+    let loadedVideos = 0;
+    let totalVideos = 0;
+    let currentPlayingVideo = null; // 現在再生中の動画
+    let startTime = null;
+    let progress = 0;
+    let animationFrameId = null;
+    let firstLoadTime = null;
+    let estimatedTotalTime = null;
 
-    // 🎯 Experiment ボタンのクリックイベント
+    // 🎯 Experiment ボタンのクリックイベント（動画を強制停止 & 実験モード切り替え）
     experimentButtons.forEach(button => {
         button.addEventListener("click", function () {
             selectedExperiment = this.getAttribute("data-experiment");
 
-            // 動画を停止して非表示にする
-            experimentVideo.pause();
-            experimentVideo.src = "";
-            experimentVideo.load(); // 次の再生のためにリセット
-            videoContainer.style.opacity = "0"; // フェードアウト
-            setTimeout(() => {
-                videoContainer.style.visibility = "hidden";
-            }, 300);
+            // 🔴 再生中の動画があれば強制停止してリセット
+            if (currentPlayingVideo) {
+                resetVideo(currentPlayingVideo);
+            }
 
-            // ボタンのスタイルを更新（選択されたボタンを強調）
+            // ボタンのスタイル更新
             experimentButtons.forEach(btn => btn.classList.remove("selected"));
             this.classList.add("selected");
         });
     });
+
+    // 🎬 事前に動画をロードし、進捗を表示
+    function preloadVideos() {
+        const promises = [];
+        startTime = performance.now();
+
+        fruitImages.forEach(fruit => {
+            experimentButtons.forEach(button => {
+                const exp = button.getAttribute("data-experiment");
+                const videoUrl = fruit.getAttribute(`data-video-${exp}`);
+
+                if (videoUrl && !preloadedVideos[videoUrl]) {
+                    totalVideos++;
+                    const video = document.createElement("video");
+                    video.src = videoUrl;
+                    video.preload = "auto";
+                    video.muted = true;
+                    video.loop = false;
+                    video.style.display = "none";
+                    video.style.zIndex = "-1";
+                    video.setAttribute("data-video", videoUrl);
+                    preloadVideosContainer.appendChild(video);
+                    preloadedVideos[videoUrl] = video;
+
+                    // 🎬 最初の動画のロード時間を測定
+                    const videoLoadPromise = new Promise(resolve => {
+                        video.addEventListener("canplaythrough", () => {
+                            if (firstLoadTime === null) {
+                                firstLoadTime = performance.now() - startTime;
+                                estimatedTotalTime = firstLoadTime * totalVideos;
+                                startProgressAnimation(estimatedTotalTime);
+                            }
+                            loadedVideos++;
+                            updateActualProgress();
+                            resolve();
+                        });
+                    });
+
+                    promises.push(videoLoadPromise);
+                }
+            });
+        });
+
+        // 🔴 すべての動画がロード完了したら Now Loading... を消す
+        Promise.all(promises).then(() => {
+            cancelAnimationFrame(animationFrameId);
+            progressBar.style.width = "100%";
+            setTimeout(() => {
+                loadingScreen.style.opacity = "0";
+                setTimeout(() => {
+                    loadingScreen.style.display = "none";
+                }, 500);
+            }, 500);
+        });
+    }
+
+    // 🔵 進捗バーのアニメーションを開始
+    function startProgressAnimation(totalTime) {
+        let startAnimationTime = performance.now();
+
+        function updateProgress() {
+            let currentTime = performance.now();
+            let elapsed = currentTime - startAnimationTime;
+            let estimatedProgress = Math.min((elapsed / totalTime) * 100, 100);
+            let actualProgress = (loadedVideos / totalVideos) * 100;
+
+            progress = Math.max(progress, estimatedProgress, actualProgress);
+            progressBar.style.width = `${progress}%`;
+
+            if (progress < 100) {
+                animationFrameId = requestAnimationFrame(updateProgress);
+            }
+        }
+        animationFrameId = requestAnimationFrame(updateProgress);
+    }
+
+    // 🔵 実際の進捗バー更新（動画ごと）
+    function updateActualProgress() {
+        let actualProgress = (loadedVideos / totalVideos) * 100;
+        progress = Math.max(progress, actualProgress);
+        progressBar.style.width = `${progress}%`;
+    }
 
     // 🍓 フルーツ画像のクリックイベント（ボタンが押されていないと無効）
     fruitImages.forEach(fruit => {
@@ -39,49 +126,62 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (!videoUrl) return;
 
-            // 🎬 すでに動画が再生中なら強制的に停止して新しい動画を再生
-            experimentVideo.pause();
-            experimentVideo.src = videoUrl;
-            experimentVideo.load(); // 新しい動画の読み込み
-            experimentVideo.play();
+            // 🔴 再生中の動画があれば強制停止してリセット
+            if (currentPlayingVideo) {
+                resetVideo(currentPlayingVideo);
+            }
 
-            // 動画コンテナを表示（透明→可視化をスムーズに）
-            videoContainer.style.visibility = "visible";
-            videoContainer.style.opacity = "1";
+            // すべての事前ロード動画を隠す
+            Object.values(preloadedVideos).forEach(video => {
+                video.style.display = "none";
+                video.style.zIndex = "-1";
+                video.pause();
+            });
 
-            // 🔴 クリックしたフルーツの範囲を一時的に赤枠で表示
-            fruitImages.forEach(f => f.style.border = "2px solid transparent"); // 他の枠をリセット
-            this.style.border = "2px solid red"; 
-            setTimeout(() => {
-                this.style.border = "2px solid transparent"; // 1秒後に戻す
-            }, 1000);
+            // 🎬 選択した動画を `front.png` の前に表示
+            const selectedVideo = preloadedVideos[videoUrl];
+            if (selectedVideo) {
+                selectedVideo.style.display = "block";
+                selectedVideo.style.zIndex = "2";
+                selectedVideo.muted = false;
+                selectedVideo.play().catch(error => {
+                    console.warn("Playback failed, retrying:", error);
+                    selectedVideo.muted = false;
+                    selectedVideo.play();
+                });
 
-            // 既存のタイマーをクリア（連続クリック対策）
-            if (hideTimeout) {
-                clearTimeout(hideTimeout);
+                // 現在再生中の動画を更新
+                currentPlayingVideo = selectedVideo;
             }
 
             // ✅ 動画終了時に非表示にする
-            experimentVideo.onended = function () {
-                experimentVideo.pause();
-                experimentVideo.src = "";
-                experimentVideo.load();
-                videoContainer.style.opacity = "0";
-                setTimeout(() => {
-                    videoContainer.style.visibility = "hidden";
-                }, 300);
+            selectedVideo.onended = function () {
+                hideVideo(selectedVideo);
             };
 
-            // 指定時間後に動画を非表示（万が一 `onended` が効かない場合の保険）
-            hideTimeout = setTimeout(() => {
-                experimentVideo.pause();
-                experimentVideo.src = "";
-                experimentVideo.load();
-                videoContainer.style.opacity = "0";
-                setTimeout(() => {
-                    videoContainer.style.visibility = "hidden";
-                }, 300);
+            // ⏳ 指定時間後に動画を非表示
+            setTimeout(() => {
+                hideVideo(selectedVideo);
             }, duration);
         });
     });
+
+    // 🎯 動画を非表示にする関数
+    function hideVideo(video) {
+        video.pause();
+        video.style.display = "none";
+        video.style.zIndex = "-1";
+        video.currentTime = 0; // 🔴 次回再生時は最初から
+        currentPlayingVideo = null;
+    }
+
+    // 🎯 動画をリセットする関数（途中で止められた場合に最初に戻す）
+    function resetVideo(video) {
+        video.pause();
+        video.currentTime = 0; // 🔴 途中再生のままにしない
+        video.style.display = "none";
+        video.style.zIndex = "-1";
+    }
+
+    preloadVideos();
 });
