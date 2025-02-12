@@ -11,12 +11,12 @@
     <img id="front-image" src="images/front.png" alt="Front Image">
     
     <!-- 🎬 Cloudflare R2 から動画を再生 -->
-    <div id="video-container">
+<!--     <div id="video-container">
         <video id="experiment-video" controls autoplay width="800">
             <source src="https://eaeefea4-weathered-recipe-7545.daiki-mayumi.workers.dev/video.mp4" type="video/mp4">
             お使いのブラウザは動画をサポートしていません。
         </video>
-    </div>
+    </div> -->
     <!-- 🎬 Cloudflare R2 の動画 -->
     <div id="video-container">
         <video id="experiment-video" controls autoplay preload="auto">
@@ -77,6 +77,15 @@
              data-duration="48000" alt="Strawberry">
     </div>
 
+    <!-- 🏆 Experiment ボタン -->
+    <div id="experiment-buttons">
+        <div id="experiment-text">Please select your experiment.</div>
+        <div id="experiment-button-container">
+            <button class="experiment-btn" data-experiment="V_German">Ex1</button>
+            <button class="experiment-btn" data-experiment="VV_German">Ex2</button>
+            <button class="experiment-btn" data-experiment="VVP_German">Ex3</button>
+        </div>
+    </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
