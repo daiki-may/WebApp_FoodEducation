@@ -191,6 +191,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const preloadVideosContainer = document.getElementById("preload-videos");
     const loadingScreen = document.getElementById("loading-screen");
     const progressBar = document.getElementById("progress-bar");
+    const videoContainer = document.getElementById("video-container");
     const videoElement = document.getElementById("experiment-video");
     const videoSource = document.getElementById("video-source");
     
@@ -279,6 +280,10 @@ document.addEventListener("DOMContentLoaded", function () {
             videoElement.load();
             videoElement.play();
 
+            // ✅ **動画を表示**
+            videoContainer.style.display = "block";  // `display: none;` を解除
+            videoContainer.style.zIndex = "5";      // `z-index` を上げて前面に表示
+
             // 現在の動画を更新
             currentPlayingVideo = videoElement;
 
@@ -293,6 +298,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function hideVideo(video) {
         video.pause();
         video.style.display = "none";
+        videoContainer.style.display = "none";  // **動画コンテナも非表示に**
         video.currentTime = 0;
         currentPlayingVideo = null;
     }
@@ -302,6 +308,7 @@ document.addEventListener("DOMContentLoaded", function () {
         video.pause();
         video.currentTime = 0;
         video.style.display = "none";
+        videoContainer.style.display = "none";  // **動画コンテナも非表示に**
     }
 
     preloadVideos();
