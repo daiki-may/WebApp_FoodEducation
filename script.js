@@ -15,21 +15,49 @@ document.addEventListener("DOMContentLoaded", function () {
     let firstLoadTime = null;
     let estimatedTotalTime = null;
 
-    // 🎯 Experiment ボタンのクリックイベント（動画を強制停止 & 実験モード切り替え）
+    // 🌟 ブランチ名ごとに異なる実験モードを設定
+    const hostname = window.location.hostname;
+
+    if (hostname.includes("experiment-1")) {
+        selectedExperiment = "experiment-1";
+    } else if (hostname.includes("experiment-2")) {
+        selectedExperiment = "experiment-2";
+    } else if (hostname.includes("experiment-3")) {
+        selectedExperiment = "experiment-3";
+    } else {
+        selectedExperiment = "default"; // `main` ブランチやローカル環境用
+    }
+
+    // 🎯 Experiment ボタンのクリックイベント（ボタンは非表示または削除する）
+    experimentButtons.forEach(button => button.style.display = "none"); // ボタンを非表示にする
+
+    // 🎯 初期設定時にボタンのスタイルを適用（選択された実験を適用）
     experimentButtons.forEach(button => {
-        button.addEventListener("click", function () {
-            selectedExperiment = this.getAttribute("data-experiment");
-
-            // 🔴 再生中の動画があれば強制停止してリセット
-            if (currentPlayingVideo) {
-                resetVideo(currentPlayingVideo);
-            }
-
-            // ボタンのスタイル更新
-            experimentButtons.forEach(btn => btn.classList.remove("selected"));
-            this.classList.add("selected");
-        });
+        if (button.getAttribute("data-experiment") === selectedExperiment) {
+            button.classList.add("selected");
+        }
     });
+
+    // 実験に応じた処理を適用
+    applyExperiment(selectedExperiment);
+
+    // 🔥 実験に応じた処理
+    function applyExperiment(experiment) {
+        if (experiment === "experiment-1") {
+            console.log("Experiment 1: 特定の設定を適用");
+            // Experiment 1の処理を書く
+        } else if (experiment === "experiment-2") {
+            console.log("Experiment 2: 別の設定を適用");
+            // Experiment 2の処理を書く
+        } else if (experiment === "experiment-3") {
+            console.log("Experiment 3: 異なる設定を適用");
+            // Experiment 3の処理を書く
+        } else {
+            console.log("Default モード");
+            // デフォルトの処理
+        }
+    }
+
 
     // 🎬 事前に動画をロードし、進捗を表示
     function preloadVideos() {
