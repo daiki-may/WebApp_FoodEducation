@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log(`Selected experiment: ${selectedExperiment}`);
 
-    // 🎬 事前に動画をロード（ex3ならVVP_Germanのみロード）
+    // 🎬 事前に動画をロード
     function preloadVideos() {
         const promises = [];
         loadedVideos = 0;  // 初期化
@@ -274,21 +274,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            // 🔴 再生中の動画があれば停止
-            if (currentPlayingVideo) {
+            // 🔴 **現在の動画が再生中なら強制終了**
+            if (currentPlayingVideo && !currentPlayingVideo.paused) {
                 resetVideo(currentPlayingVideo);
             }
 
-            // 🎬 動画をセットして再生
+            // 🎬 **動画をセットして確実にロード**
             videoSource.src = videoUrl;
-            videoElement.load();  // **これで新しい動画を確実にロード**
+            videoElement.load();  // **新しい動画を確実にロード**
             videoElement.play();  // **新しい動画を確実に再生**
-
-            // ✅ **動画を表示**
+            
+            // ✅ **動画を確実に表示**
             videoContainer.style.display = "block";  // `display: none;` を解除
             videoContainer.style.zIndex = "5";      // `z-index` を上げて前面に表示
 
-            // 現在の動画を更新
+            // ✅ **新しい動画を現在の動画としてセット**
             currentPlayingVideo = videoElement;
 
             // ✅ 動画終了時に非表示
@@ -307,8 +307,9 @@ document.addEventListener("DOMContentLoaded", function () {
         currentPlayingVideo = null;
     }
 
-    // 🎯 動画をリセットする関数
+    // 🎯 **動画を強制終了する関数**
     function resetVideo(video) {
+        console.log("Resetting current video...");
         video.pause();
         video.currentTime = 0;
         video.style.display = "none";
