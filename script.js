@@ -194,14 +194,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const videoContainer = document.getElementById("video-container");
     const videoElement = document.getElementById("experiment-video");
     const videoSource = document.getElementById("video-source");
-    
+
     let selectedExperiment = null;
     let preloadedVideos = {};
     let loadedVideos = 0;
     let totalVideos = 0;
     let currentPlayingVideo = null;
-    
-    // 🌟 ブランチ名ごとに自動で実験モードを設定
+
+    // 🌟 ブランチ名ごとに実験モードを設定
     const hostname = window.location.hostname;
     if (hostname.includes("experiment-1")) {
         selectedExperiment = "V_German";
@@ -215,9 +215,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     console.log(`Selected experiment: ${selectedExperiment}`);
 
-    // 🎬 事前に動画をロード
+    // 🎬 事前に動画をロード（ex3ならVVP_Germanのみロード）
     function preloadVideos() {
         const promises = [];
+        loadedVideos = 0;  // 初期化
+        totalVideos = 0;    // 初期化
+
         fruitImages.forEach(fruit => {
             const videoUrl = fruit.getAttribute(`data-video-${selectedExperiment}`);
             if (videoUrl && !preloadedVideos[videoUrl]) {
@@ -246,6 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // 🎯 すべての動画がロードされたらローディング画面を非表示
         Promise.all(promises).then(() => {
+            console.log("All videos preloaded successfully.");
             setTimeout(() => {
                 loadingScreen.style.opacity = "0";
                 setTimeout(() => {
@@ -277,8 +281,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // 🎬 動画をセットして再生
             videoSource.src = videoUrl;
-            videoElement.load();
-            videoElement.play();
+            videoElement.load();  // **これで新しい動画を確実にロード**
+            videoElement.play();  // **新しい動画を確実に再生**
 
             // ✅ **動画を表示**
             videoContainer.style.display = "block";  // `display: none;` を解除
