@@ -275,15 +275,20 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             // 🔴 **現在の動画が再生中なら強制終了**
-            if (currentPlayingVideo && !currentPlayingVideo.paused) {
+            if (currentPlayingVideo) {
                 resetVideo(currentPlayingVideo);
             }
 
-            // 🎬 **動画をセットして確実にロード**
+            // 🎬 **新しい動画をセット**
             videoSource.src = videoUrl;
-            videoElement.load();  // **新しい動画を確実にロード**
-            videoElement.play();  // **新しい動画を確実に再生**
+            videoElement.load();  // **動画を確実にリロード**
             
+            // ✅ **動画の準備ができたら再生**
+            videoElement.addEventListener("canplaythrough", function playVideoOnce() {
+                videoElement.play();
+                videoElement.removeEventListener("canplaythrough", playVideoOnce);
+            });
+
             // ✅ **動画を確実に表示**
             videoContainer.style.display = "block";  // `display: none;` を解除
             videoContainer.style.zIndex = "5";      // `z-index` を上げて前面に表示
@@ -312,6 +317,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("Resetting current video...");
         video.pause();
         video.currentTime = 0;
+        video.load(); // **確実にリセット**
         video.style.display = "none";
         videoContainer.style.display = "none";  // **動画コンテナも非表示に**
     }
