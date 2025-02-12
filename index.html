@@ -3,14 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Education Experiment - Experiment 3</title>
+    <title>Food Education Experiment</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
 </head>
 <body>
     <img id="front-image" src="images/front.png" alt="Front Image">
-
-    <!-- 🎬 動画コンテナ -->
+    
+    <!-- 🎬 Cloudflare R2 から動画を再生 -->
+    <div id="video-container">
+        <video id="experiment-video" controls autoplay width="800">
+            <source src="https://eaeefea4-weathered-recipe-7545.daiki-mayumi.workers.dev/video.mp4" type="video/mp4">
+            お使いのブラウザは動画をサポートしていません。
+        </video>
+    </div>
+    <!-- 🎬 Cloudflare R2 の動画 -->
     <div id="video-container">
         <video id="experiment-video" controls autoplay preload="auto">
             <source id="video-source" src="" type="video/mp4">
@@ -18,8 +25,9 @@
         </video>
     </div>
 
-    <!-- 🎬 事前に読み込む動画（非表示） -->
+    <!-- 🎬 事前に読み込む動画（非表示 & z-index: -1）-->
     <div id="preload-videos"></div>
+
 
     <!-- ⏳ ローディング画面 -->
     <div id="loading-screen">
@@ -30,30 +38,72 @@
         </div>
     </div>
 
+
+
     <img id="plate-image" src="images/plate.png" alt="Plate Image">
     <img id="desk-image" src="images/desk.png" alt="Desk Image">
 
     <!-- 🍓 フルーツ画像 -->
     <div id="fruit-container">
         <img id="grape" class="fruit" src="images/real/grape.png"
-             data-video-VVP_German="https://example.com/VVP_German/grape2.mp4"
-             alt="Grape">
+             data-video-V_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/V_German_Ex/grape2.mp4"
+             data-video-VV_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/VV_German_Ex/grape1.mp4"
+             data-video-VVP_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/VVP_German_Ex/grape2.mp4"
+             data-duration="49000" alt="Grape">
         <img id="kiwi" class="fruit" src="images/real/kiwi.png"
-             data-video-VVP_German="https://example.com/VVP_German/kiwi2.mp4"
-             alt="Kiwi">
+             data-video-V_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/V_German_Ex/kiwi2.mp4"
+             data-video-VV_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/VV_German_Ex/kiwi1.mp4"
+             data-video-VVP_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/VVP_German_Ex/kiwi2.mp4"
+             data-duration="48000" alt="Kiwi">
         <img id="melon" class="fruit" src="images/real/melon.png"
-             data-video-VVP_German="https://example.com/VVP_German/melon2.mp4"
-             alt="Melon">
+             data-video-V_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/V_German_Ex/melon2.mp4"
+             data-video-VV_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/VV_German_Ex/melon1.mp4"
+             data-video-VVP_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/VVP_German_Ex/melon2.mp4"
+             data-duration="49000" alt="Melon">
         <img id="pine" class="fruit" src="images/real/pine.png"
-             data-video-VVP_German="https://example.com/VVP_German/pine2.mp4"
-             alt="Pine">
+             data-video-V_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/V_German_Ex/pine2.mp4"
+             data-video-VV_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/VV_German_Ex/pine1.mp4"
+             data-video-VVP_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/VVP_German_Ex/pine2.mp4"
+             data-duration="49000" alt="Pine">
         <img id="raspberry" class="fruit" src="images/real/raspberry.png"
-             data-video-VVP_German="https://example.com/VVP_German/raspberry2.mp4"
-             alt="Raspberry">
+             data-video-V_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/V_German_Ex/raspberry2.mp4"
+             data-video-VV_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/VV_German_Ex/raspberry1.mp4"
+             data-video-VVP_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/VVP_German_Ex/raspberry2.mp4"
+             data-duration="50000" alt="Raspberry">
         <img id="strawberry" class="fruit" src="images/real/strawberry.png"
-             data-video-VVP_German="https://example.com/VVP_German/strawberry2.mp4"
-             alt="Strawberry">
+             data-video-V_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/V_German_Ex/strawberry2.mp4"
+             data-video-VV_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/VV_German_Ex/strawberry1.mp4"
+             data-video-VVP_German="https://pub-fefef8d68f874241adcdbdfb47c27d81.r2.dev/VVP_German_Ex/strawberry2.mp4"
+             data-duration="48000" alt="Strawberry">
     </div>
+
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var videoElement = document.getElementById('experiment-video');
+
+            // フルーツをクリックすると対応する動画を再生
+            document.querySelectorAll('.fruit').forEach(function(fruit) {
+                fruit.addEventListener('click', function() {
+                    var selectedExperiment = document.querySelector('.experiment-btn.active')?.dataset.experiment || "V_German";
+                    var videoSrc = fruit.dataset[`video-${selectedExperiment}`];
+
+                    if (videoSrc) {
+                        videoElement.src = videoSrc;
+                        videoElement.play();
+                    }
+                });
+            });
+
+            // 実験ボタンの切り替え
+            document.querySelectorAll('.experiment-btn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.experiment-btn').forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
