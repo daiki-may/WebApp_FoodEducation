@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 🍓 フルーツ画像のクリックイベント（Ex2 以外は無効）
     fruitImages.forEach(fruit => {
         fruit.addEventListener("click", function () {
-            if (selectedExperiment !== "VV2_German") return; // 🚫 Ex2 以外ではクリック無効
+            if (selectedExperiment !== "VV_German") return; // 🚫 Ex2 以外ではクリック無効
 
             const videoUrl = this.getAttribute(`data-video-${selectedExperiment}`);
             const duration = parseInt(this.getAttribute(`data-duration`), 10) || 50000;
