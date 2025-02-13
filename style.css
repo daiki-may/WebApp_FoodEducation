@@ -229,27 +229,29 @@ button {
 
 /* 🎯 Experiment ボタンのデザイン（円形） */
 .experiment-btn {
-    width: 60px;
-    height: 60px;
+    width: 5vw;
+    height: 5vw;
     background: linear-gradient(135deg, #ff7eb3, #ff758c);
     border: none;
     color: white;
-    font-size: 20px;
+    font-size: 1.5vw;
     font-weight: bold;
     text-align: center;
     border-radius: 50%; /* 円形 */
     cursor: pointer;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease;
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 9999; /* 👑 最前面 */
 }
 
-/* 🟡 ホバー時のデザイン */
-.experiment-btn:hover {
-    background: linear-gradient(135deg, #ff758c, #ff7eb3);
-    transform: scale(1.1);
+/* 🟡 無効化されたボタン */
+.experiment-btn.disabled {
+    pointer-events: none; /* 🚫 クリック不可 */
+    opacity: 0.5; /* 🔲 半透明に */
+    background: gray; /* 灰色に */
 }
 
 /* 🟢 ボタンが選択されたときの強調 */
@@ -259,7 +261,15 @@ button {
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
 }
 
+
+/* 🟡 ホバー時のデザイン */
+.experiment-btn:hover {
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    transform: scale(1.1);
+}
+
 .fruit-wrapper {
     position: relative;
     display: inline-block;
 }
+
