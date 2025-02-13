@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const preloadVideosContainer = document.getElementById("preload-videos");
     const loadingScreen = document.getElementById("loading-screen");
     const progressBar = document.getElementById("progress-bar");
-    let selectedExperiment = "V_German"; // ✅ Ex1をデフォルト選択
+    let selectedExperiment = "V_Japanese"; // ✅ Ex1をデフォルト選択
     let preloadedVideos = {};
     let loadedVideos = 0;
     let totalVideos = 0;
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // ✅ 初期状態で Ex1 ボタンを選択、他のボタンは無効化
     experimentButtons.forEach(button => {
         const exp = button.getAttribute("data-experiment");
-        if (exp !== "V_German") {
+        if (exp !== "V_Japanese") {
             button.classList.add("disabled");
             button.disabled = true;
         } else {
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
         let startTime = performance.now();
 
         fruitImages.forEach(fruit => {
-            const videoUrl = fruit.getAttribute(`data-video-V_German`); // ✅ Ex3 のみ
+            const videoUrl = fruit.getAttribute(`data-video-V_Japanese`); // ✅ Ex3 のみ
             if (videoUrl && !preloadedVideos[videoUrl]) {
                 totalVideos++;
                 const video = document.createElement("video");
@@ -99,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // 🍓 フルーツ画像のクリックイベント（Ex1 以外は無効）
     fruitImages.forEach(fruit => {
         fruit.addEventListener("click", function () {
-            if (selectedExperiment !== "V_German") return; // 🚫 Ex1 以外ではクリック無効
+            if (selectedExperiment !== "V_Japanese") return; // 🚫 Ex1 以外ではクリック無効
 
             const videoUrl = this.getAttribute(`data-video-${selectedExperiment}`);
             const duration = parseInt(this.getAttribute(`data-duration`), 10) || 50000;
