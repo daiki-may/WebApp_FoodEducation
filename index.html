@@ -86,7 +86,7 @@
             // フルーツをクリックすると対応する動画を再生
             document.querySelectorAll('.fruit').forEach(function(fruit) {
                 fruit.addEventListener('click', function() {
-                    var selectedExperiment = document.querySelector('.experiment-btn.active')?.dataset.experiment || "V_Japanese";
+                    var selectedExperiment = document.querySelector('.experiment-btn.active')?.dataset.experiment || "VVP_Japanese";
                     var videoSrc = fruit.dataset[`video-${selectedExperiment}`];
 
                     if (videoSrc) {
