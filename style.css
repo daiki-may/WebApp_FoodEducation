@@ -128,10 +128,10 @@ body {
 /* 🎬 事前に読み込む動画（非表示 & z-index: -1） */
 #preload-videos video {
     position: absolute;
-    top: 40%;  /* 画面中央 */
+    top: 42%;  /* 画面中央 */
     left: 50.3%;  /* 画面中央 */
     transform: translate(-50%, -50%);  /* 完全に中央寄せ */
-    width: 55vw;  /* 画面の 60% 幅 */
+    width: 49vw;  /* 画面の 60% 幅 */
     max-width: 1200px;
     height: auto;
     object-fit: contain;
